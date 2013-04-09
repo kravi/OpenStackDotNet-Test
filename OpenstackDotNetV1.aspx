@@ -11,7 +11,7 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>Instructions:</h1>
     <p>
-        Please enter your Username, APIKey, and Container to upload to.<br>
+        Please enter your Username, APIKey, and Container to upload to.<br />
         Once you have successfully entered this information please be sure<br />
         to select true of false for service net and then click upload.<br />
         <br />
@@ -25,22 +25,47 @@
     </p>
     <br />
     Username:
-            <br />
+    <br />
     <asp:TextBox ID="CFUsernameText" runat="server"></asp:TextBox>
     <br />
     APIKey:
-            <br />
+    <br />
     <asp:TextBox ID="CFApiKeyText" TextMode="Password" runat="server"></asp:TextBox>
     <br />
     Container To Upload To:
+    <br />
+    <asp:DropDownList ID="CFContainerDDL" runat="server"></asp:DropDownList>
+    <br />
+    <br />
+    Container Contents:
+    <br />
+    <asp:DropDownList ID="CFContainerContentsDDL" runat="server"></asp:DropDownList>
+    <br />
+    <br />
+    <div>
+        Please Select Region:
+                <br />
+        <div style="width: 40px; float: left;">
+            <asp:CheckBox ID="RegionDFW" Text="DFW" value="DFW" runat="server" />
+        </div>
+        <div style="width: 40px; float: left;">
             <br />
-    <asp:TextBox ID="CFContainerText" runat="server"></asp:TextBox>
+            Or
+        </div>
+        <div style="width: 40px; float: left;">
+            <asp:CheckBox ID="RegionORD" Text="ORD" value="ORD" runat="server" />
+        </div>
+        <div style="clear: both;">
+        </div>
+        <br />
+        <br />
+    </div>
+    <asp:Button ID="btnListContainers" runat="server" CssClass="btn-primary" OnClick="ListContainers_Click" Text="List Containers" />
+    <asp:Button ID="btnListContainerContents" runat="server" CssClass="btn-primary" OnClick="ListContainerContents_Click" Text="List Container Contents" />
+    <asp:Button ID="btnDeleteContainerObject" runat="server" CssClass="btn-primary" OnClick="DeleteContainerObject_Click" Text="Delete Object" />
     <br />
     <br />
-    <asp:Button ID="Button2" runat="server" CssClass="btn-primary" OnClick="ListContainerContents_Click" Text="List Container Contents" />
-    <br />
-    <br />
-    <asp:Button ID="ListContentsBtn" runat="server" CssClass="btn-primary" OnClick="ListAvailableServers_Click" Text="List Available Servers" />
+    <asp:Button ID="btnListAvailableServers" runat="server" CssClass="btn-primary" OnClick="ListAvailableServers_Click" Text="List Available Servers" />
     <br />
     <br />
     <asp:GridView ID="CFResultsGrid" runat="server"></asp:GridView>
@@ -49,9 +74,11 @@
     <asp:FileUpload ID="FileUpload1" runat="server" />
     <br />
     <br />
-    <asp:Button ID="Button1" runat="server" CssClass="btn-primary" OnClick="CloudFilesUpload_Click" Text="Upload to Cloud Files" />
+    <asp:Button ID="btnCloudFilesUpload" runat="server" CssClass="btn-primary" OnClick="CloudFilesUpload_Click" Text="Upload to Cloud Files" />
     <br />
     <br />
     <asp:Label ID="Error" ForeColor="Red" runat="server"></asp:Label>
+    <br />
+    <asp:Label ID="LblInfo" ForeColor="Red" runat="server"></asp:Label>
     <br />
 </asp:Content>

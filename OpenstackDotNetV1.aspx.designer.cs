@@ -31,31 +31,76 @@ namespace OpenStackDotNet_Test {
         protected global::System.Web.UI.WebControls.TextBox CFApiKeyText;
         
         /// <summary>
-        /// CFContainerText control.
+        /// CFContainerDDL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CFContainerText;
+        protected global::System.Web.UI.WebControls.DropDownList CFContainerDDL;
         
         /// <summary>
-        /// Button2 control.
+        /// CFContainerContentsDDL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button2;
+        protected global::System.Web.UI.WebControls.DropDownList CFContainerContentsDDL;
         
         /// <summary>
-        /// ListContentsBtn control.
+        /// RegionDFW control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ListContentsBtn;
+        protected global::System.Web.UI.WebControls.CheckBox RegionDFW;
+        
+        /// <summary>
+        /// RegionORD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox RegionORD;
+        
+        /// <summary>
+        /// btnListContainers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnListContainers;
+        
+        /// <summary>
+        /// btnListContainerContents control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnListContainerContents;
+        
+        /// <summary>
+        /// btnDeleteContainerObject control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDeleteContainerObject;
+        
+        /// <summary>
+        /// btnListAvailableServers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnListAvailableServers;
         
         /// <summary>
         /// CFResultsGrid control.
@@ -76,13 +121,13 @@ namespace OpenStackDotNet_Test {
         protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
         
         /// <summary>
-        /// Button1 control.
+        /// btnCloudFilesUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button1;
+        protected global::System.Web.UI.WebControls.Button btnCloudFilesUpload;
         
         /// <summary>
         /// Error control.
@@ -92,5 +137,14 @@ namespace OpenStackDotNet_Test {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Error;
+        
+        /// <summary>
+        /// LblInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblInfo;
     }
 }
