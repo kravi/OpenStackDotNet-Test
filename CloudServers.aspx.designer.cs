@@ -10,7 +10,7 @@
 namespace OpenStackDotNet_Test {
     
     
-    public partial class RackspaceDotNetV3 {
+    public partial class CloudServers {
         
         /// <summary>
         /// CFUsernameText control.
@@ -31,22 +31,31 @@ namespace OpenStackDotNet_Test {
         protected global::System.Web.UI.WebControls.TextBox CFApiKeyText;
         
         /// <summary>
-        /// CFContainerText control.
+        /// RegionDFW control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox CFContainerText;
+        protected global::System.Web.UI.WebControls.CheckBox RegionDFW;
         
         /// <summary>
-        /// ListContentsBtn control.
+        /// RegionORD control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button ListContentsBtn;
+        protected global::System.Web.UI.WebControls.CheckBox RegionORD;
+        
+        /// <summary>
+        /// btnListAvailableServers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnListAvailableServers;
         
         /// <summary>
         /// CFResultsGrid control.
@@ -58,42 +67,6 @@ namespace OpenStackDotNet_Test {
         protected global::System.Web.UI.WebControls.GridView CFResultsGrid;
         
         /// <summary>
-        /// SnetTrue control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox SnetTrue;
-        
-        /// <summary>
-        /// SnetFalse control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox SnetFalse;
-        
-        /// <summary>
-        /// FileUpload1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload FileUpload1;
-        
-        /// <summary>
-        /// btnUpload control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnUpload;
-        
-        /// <summary>
         /// Error control.
         /// </summary>
         /// <remarks>
@@ -101,5 +74,14 @@ namespace OpenStackDotNet_Test {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Error;
+        
+        /// <summary>
+        /// LblInfo control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label LblInfo;
     }
 }

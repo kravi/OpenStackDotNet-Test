@@ -1,12 +1,12 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="OpenstackDotNetV1.aspx.cs" Inherits="OpenStackDotNet_Test.OpenstackDotNetV1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CloudServers.aspx.cs" Inherits="OpenStackDotNet_Test.CloudServers" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="PageTitle" runat="server">
-    Openstack .NET V1 Bindings Test
+    Openstack.NET Cloud Servers
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Head" runat="server">
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="ProjectName" runat="server">
-    Openstack .NET V1 Bindings Test
+    Openstack.NET Cloud Servers
 </asp:Content>
 <asp:Content ID="Content4" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>Instructions:</h1>
@@ -32,15 +32,6 @@
     <br />
     <asp:TextBox ID="CFApiKeyText" TextMode="Password" runat="server"></asp:TextBox>
     <br />
-    Container To Upload To:
-    <br />
-    <asp:DropDownList ID="CFContainerDDL" runat="server"></asp:DropDownList>
-    <br />
-    <br />
-    Container Contents:
-    <br />
-    <asp:DropDownList ID="CFContainerContentsDDL" runat="server"></asp:DropDownList>
-    <br />
     <br />
     <div>
         Please Select Region:
@@ -60,21 +51,10 @@
         <br />
         <br />
     </div>
-    <asp:Button ID="btnListContainers" runat="server" CssClass="btn-primary" OnClick="ListContainers_Click" Text="List Containers" />
-    <asp:Button ID="btnListContainerContents" runat="server" CssClass="btn-primary" OnClick="ListContainerContents_Click" Text="List Container Contents" />
-    <asp:Button ID="btnDeleteContainerObject" runat="server" CssClass="btn-primary" OnClick="DeleteContainerObject_Click" Text="Delete Object" />
-    <br />
-    <br />
     <asp:Button ID="btnListAvailableServers" runat="server" CssClass="btn-primary" OnClick="ListAvailableServers_Click" Text="List Available Servers" />
     <br />
     <br />
     <asp:GridView ID="CFResultsGrid" runat="server"></asp:GridView>
-    <br />
-    <br />
-    <asp:FileUpload ID="FileUpload1" runat="server" />
-    <br />
-    <br />
-    <asp:Button ID="btnCloudFilesUpload" runat="server" CssClass="btn-primary" OnClick="CloudFilesUpload_Click" Text="Upload to Cloud Files" />
     <br />
     <br />
     <asp:Label ID="Error" ForeColor="Red" runat="server"></asp:Label>

@@ -56,8 +56,11 @@
                     <div class="nav-collapse collapse">
                         <ul class="nav">
                             <li><a href="../">Home</a></li>
-                            <li><a href="OpenstackDotNetV1.aspx">OpenStackV1</a></li>
-                            <li><a href="RackspaceDotNetV3.aspx">RackspaceV3</a></li>
+                            <li><a href="CloudFiles.aspx">Cloud Files</a></li>
+                            <li><a href="CloudBlockStorage.aspx">Cloud Block Storage</a></li>
+                            <li><a href="CloudServers.aspx">Cloud Servers</a></li>
+                            <li><a href="CloudLoadBalancers.aspx">Cloud Load Balancers</a></li>
+                            <li><a href="CloudNetworks.aspx">Cloud Networks</a></li>
                         </ul>
                     </div>
                     <!--/.nav-collapse -->

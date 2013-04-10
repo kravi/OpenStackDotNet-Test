@@ -11,7 +11,7 @@ using net.openstack.Providers.Rackspace;
 
 namespace OpenStackDotNet_Test
 {
-    public partial class OpenstackDotNetV1 : System.Web.UI.Page
+    public partial class CloudFiles : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -67,7 +67,7 @@ namespace OpenStackDotNet_Test
 
                 if (RegionDFW.Checked)
                 {
-                    var Cfobjects = CloudFilesProvider.GetObjects(containername, null, null, null, "json", "dfw", identity);
+                    var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "json", "dfw", identity);
 
                     CFContainerContentsDDL.DataSource = Cfobjects;
                     CFContainerContentsDDL.DataTextField = "Name";
@@ -75,7 +75,7 @@ namespace OpenStackDotNet_Test
                 }
                 else if (RegionORD.Checked)
                 {
-                    var Cfobjects = CloudFilesProvider.GetObjects(containername, null, null, null, "json", "ord", identity);
+                    var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "json", "ord", identity);
 
                     CFContainerContentsDDL.DataSource = Cfobjects;
                     CFContainerContentsDDL.DataTextField = "Name";
@@ -105,7 +105,7 @@ namespace OpenStackDotNet_Test
                 if (RegionDFW.Checked)
                 {
                     var Cfdelete = CloudFilesProvider.DeleteObject(containername, CFContainerContentsDDL.SelectedValue, null, "dfw", identity);
-                    var Cfobjects = CloudFilesProvider.GetObjects(containername, null, null, null, "json", "dfw", identity);
+                    var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "json", "dfw", identity);
 
                     CFContainerContentsDDL.DataSource = Cfobjects;
                     CFContainerContentsDDL.DataTextField = "Name";
@@ -114,7 +114,7 @@ namespace OpenStackDotNet_Test
                 else if (RegionORD.Checked)
                 {
                     var Cfdelete = CloudFilesProvider.DeleteObject(containername, CFContainerContentsDDL.SelectedValue, null, "ord", identity);
-                    var Cfobjects = CloudFilesProvider.GetObjects(containername, null, null, null, "json", "ord", identity);
+                    var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "json", "ord", identity);
 
                     CFContainerContentsDDL.DataSource = Cfobjects;
                     CFContainerContentsDDL.DataTextField = "Name";
@@ -154,7 +154,7 @@ namespace OpenStackDotNet_Test
                     if (RegionDFW.Checked)
                     {
                         CloudFilesProvider.CreateObjectFromFile(containername, filePath, fileName, 4096, null, "dfw", null, identity);
-                        var Cfobjects = CloudFilesProvider.GetObjects(containername, null, null, null, "json", "dfw", identity);
+                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "json", "dfw", identity);
                         File.Delete(filePath);
 
                         CFResultsGrid.DataSource = Cfobjects;
@@ -167,7 +167,7 @@ namespace OpenStackDotNet_Test
                     else if (RegionDFW.Checked)
                     {
                         CloudFilesProvider.CreateObjectFromFile(containername, filePath, fileName, 4096, null, "ord", null, identity);
-                        var Cfobjects = CloudFilesProvider.GetObjects(containername, null, null, null, "json", "ord", identity);
+                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "json", "ord", identity);
                         File.Delete(filePath);
 
                         CFResultsGrid.DataSource = Cfobjects;
@@ -187,39 +187,6 @@ namespace OpenStackDotNet_Test
                 else
                 {
                     Error.Text = FileUpload1.FileName + " Please select a file to upload.";
-                }
-            }
-            catch (Exception ex)
-            {
-                Error.Text = "Something went terribly wrong! See below for more info. <br /> <br />" + ex.ToString();
-            }
-        }
-        protected void ListAvailableServers_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider();
-                CloudServersProvider CloudServersProvider = new net.openstack.Providers.Rackspace.CloudServersProvider();
-
-                var identity = new RackspaceCloudIdentity { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
-
-                if (RegionDFW.Checked)
-                {
-                    var serverdetails = CloudServersProvider.ListServersWithDetails(null, null, null, null, null, null, null, null, identity);
-
-                    CFResultsGrid.DataSource = serverdetails;
-                    CFResultsGrid.DataBind();
-                }
-                else if (RegionDFW.Checked)
-                {
-                    var serverdetails = CloudServersProvider.ListServersWithDetails(null, null, null, null, null, null, null, null, identity);
-
-                    CFResultsGrid.DataSource = serverdetails;
-                    CFResultsGrid.DataBind();
-                }
-                else
-                {
-                    LblInfo.Text = "Please select DFW or ORD not both.";
                 }
             }
             catch (Exception ex)
