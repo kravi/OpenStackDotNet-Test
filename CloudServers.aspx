@@ -33,6 +33,24 @@
     <asp:TextBox ID="CFApiKeyText" TextMode="Password" runat="server"></asp:TextBox>
     <br />
     <br />
+    List of live Cloud Servers:
+    <br />
+    <asp:DropDownList ID="CSListDDL" runat="server"></asp:DropDownList>
+    <br />
+    <br />
+    List of available Images:
+    <br />
+    <asp:DropDownList ID="CSImageListDDL" runat="server"></asp:DropDownList>
+    <br />
+    <br />
+    <asp:TextBox ID="CSName" runat="server"></asp:TextBox>
+    <br />
+    <br />
+    List of available Flavors:
+    <br />
+    <asp:DropDownList ID="CSFlavorsDDL" runat="server"></asp:DropDownList>
+    <br />
+    <br />
     <div>
         Please Select Region:
                 <br />
@@ -51,9 +69,14 @@
         <br />
         <br />
     </div>
-    <asp:Button ID="btnListAvailableServers" runat="server" CssClass="btn-primary" OnClick="ListAvailableServers_Click" Text="List Available Servers" />
+    <asp:Button ID="btnOneClick" runat="server" CssClass="btn-primary" OnClick="OneClick_Click" Text="Load Cloud Server Info" />
     <br />
     <br />
+    <asp:Button ID="btnListCloudServerIpAddresses" runat="server" CssClass="btn-primary" OnClick="ListCloudServerIpAddresses_Click" Text="List All Ip Addresses" />
+    <asp:Button ID="btnRebootCloudServer" runat="server" CssClass="btn-primary" OnClick="RebootServer_Click" Text="Reboot Cloud Server" />
+    <br />
+    <br />
+    <asp:Button ID="btnCreateCloudServer" runat="server" CssClass="btn-primary" OnClick="CreateServer_Click" Text="Create Cloud Server" />
     <asp:GridView ID="CFResultsGrid" runat="server"></asp:GridView>
     <br />
     <br />

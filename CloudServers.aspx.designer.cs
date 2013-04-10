@@ -31,6 +31,42 @@ namespace OpenStackDotNet_Test {
         protected global::System.Web.UI.WebControls.TextBox CFApiKeyText;
         
         /// <summary>
+        /// CSListDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CSListDDL;
+        
+        /// <summary>
+        /// CSImageListDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CSImageListDDL;
+        
+        /// <summary>
+        /// CSName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox CSName;
+        
+        /// <summary>
+        /// CSFlavorsDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CSFlavorsDDL;
+        
+        /// <summary>
         /// RegionDFW control.
         /// </summary>
         /// <remarks>
@@ -49,13 +85,40 @@ namespace OpenStackDotNet_Test {
         protected global::System.Web.UI.WebControls.CheckBox RegionORD;
         
         /// <summary>
-        /// btnListAvailableServers control.
+        /// btnOneClick control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnListAvailableServers;
+        protected global::System.Web.UI.WebControls.Button btnOneClick;
+        
+        /// <summary>
+        /// btnListCloudServerIpAddresses control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnListCloudServerIpAddresses;
+        
+        /// <summary>
+        /// btnRebootCloudServer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnRebootCloudServer;
+        
+        /// <summary>
+        /// btnCreateCloudServer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCreateCloudServer;
         
         /// <summary>
         /// CFResultsGrid control.
