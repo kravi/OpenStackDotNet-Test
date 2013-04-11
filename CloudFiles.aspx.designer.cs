@@ -31,24 +31,6 @@ namespace OpenStackDotNet_Test {
         protected global::System.Web.UI.WebControls.TextBox CFApiKeyText;
         
         /// <summary>
-        /// CFContainerDDL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CFContainerDDL;
-        
-        /// <summary>
-        /// CFContainerContentsDDL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList CFContainerContentsDDL;
-        
-        /// <summary>
         /// RegionDFW control.
         /// </summary>
         /// <remarks>
@@ -67,6 +49,15 @@ namespace OpenStackDotNet_Test {
         protected global::System.Web.UI.WebControls.CheckBox RegionORD;
         
         /// <summary>
+        /// SnetCheck control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox SnetCheck;
+        
+        /// <summary>
         /// btnListContainers control.
         /// </summary>
         /// <remarks>
@@ -76,13 +67,40 @@ namespace OpenStackDotNet_Test {
         protected global::System.Web.UI.WebControls.Button btnListContainers;
         
         /// <summary>
-        /// btnListContainerContents control.
+        /// TestList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnListContainerContents;
+        protected global::System.Web.UI.WebControls.Button TestList;
+        
+        /// <summary>
+        /// CFContainerDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CFContainerDDL;
+        
+        /// <summary>
+        /// btnDeleteContainer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDeleteContainer;
+        
+        /// <summary>
+        /// CFContainerContentsDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList CFContainerContentsDDL;
         
         /// <summary>
         /// btnDeleteContainerObject control.
@@ -94,13 +112,22 @@ namespace OpenStackDotNet_Test {
         protected global::System.Web.UI.WebControls.Button btnDeleteContainerObject;
         
         /// <summary>
-        /// CFResultsGrid control.
+        /// CFCreateContainerTxt control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView CFResultsGrid;
+        protected global::System.Web.UI.WebControls.TextBox CFCreateContainerTxt;
+        
+        /// <summary>
+        /// btnCreateContainer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCreateContainer;
         
         /// <summary>
         /// FileUpload1 control.
@@ -119,6 +146,15 @@ namespace OpenStackDotNet_Test {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCloudFilesUpload;
+        
+        /// <summary>
+        /// CFResultsGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView CFResultsGrid;
         
         /// <summary>
         /// Error control.
