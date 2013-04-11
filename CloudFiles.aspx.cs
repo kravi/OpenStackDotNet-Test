@@ -50,6 +50,8 @@ namespace OpenStackDotNet_Test
                     }
                     else if (CFContainerDDL.SelectedItem != null & SnetCheck.Checked)
                     {
+                        CFContainerContentsDDL.Items.Clear();
+
                         var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetTrue, identity);
 
                         CFContainerDDL.DataSource = CfContainers;
@@ -66,11 +68,28 @@ namespace OpenStackDotNet_Test
                     {
                         if (RegionDFW.Checked)
                         {
-                            var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetFalse, identity);
+                            if (CFContainerContentsDDL.SelectedItem == null)
+                            {
+                                var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetFalse, identity);
 
-                            CFContainerDDL.DataSource = CfContainers;
-                            CFContainerDDL.DataTextField = "Name";
-                            CFContainerDDL.DataBind();
+                                CFContainerDDL.DataSource = CfContainers;
+                                CFContainerDDL.DataTextField = "Name";
+                                CFContainerDDL.DataBind();
+
+                                var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetFalse, identity);
+
+                                CFContainerContentsDDL.DataSource = Cfobjects;
+                                CFContainerContentsDDL.DataTextField = "Name";
+                                CFContainerContentsDDL.DataBind();
+                            }
+                            else
+                            {
+                                var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetFalse, identity);
+
+                                CFContainerDDL.DataSource = CfContainers;
+                                CFContainerDDL.DataTextField = "Name";
+                                CFContainerDDL.DataBind();
+                            }
                         }
                         else
                         {
@@ -124,12 +143,44 @@ namespace OpenStackDotNet_Test
                     {
                         if (RegionORD.Checked)
                         {
-                            var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
+                            if (CFContainerContentsDDL.SelectedItem == null)
+                            {
+                                var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
 
-                            CFContainerDDL.DataSource = CfContainers;
-                            CFContainerDDL.DataTextField = "Name";
-                            CFContainerDDL.DataBind();
+                                CFContainerDDL.DataSource = CfContainers;
+                                CFContainerDDL.DataTextField = "Name";
+                                CFContainerDDL.DataBind();
 
+                                var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetFalse, identity);
+
+                                CFContainerContentsDDL.DataSource = Cfobjects;
+                                CFContainerContentsDDL.DataTextField = "Name";
+                                CFContainerContentsDDL.DataBind();
+                            }
+                            else if (CFContainerContentsDDL.SelectedItem != null)
+                            {
+                                CFContainerContentsDDL.Items.Clear(); 
+
+                                var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
+
+                                CFContainerDDL.DataSource = CfContainers;
+                                CFContainerDDL.DataTextField = "Name";
+                                CFContainerDDL.DataBind();
+
+                                var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetFalse, identity);
+
+                                CFContainerContentsDDL.DataSource = Cfobjects;
+                                CFContainerContentsDDL.DataTextField = "Name";
+                                CFContainerContentsDDL.DataBind();
+                            }
+                            else
+                            {
+                                var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
+
+                                CFContainerDDL.DataSource = CfContainers;
+                                CFContainerDDL.DataTextField = "Name";
+                                CFContainerDDL.DataBind();
+                            }
                         }
                         else
                         {

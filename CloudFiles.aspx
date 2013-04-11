@@ -59,7 +59,9 @@
                 </div>
             </div>
             <asp:Button ID="btnListContainers" runat="server" CssClass="btn-primary" OnClick="ListContainerInfo_Click" Text="List Container Info" />
-            <asp:Button ID="TestList" runat="server" CssClass="btn-primary" OnClick="TestList_Click" Text="Test List Container Info" />
+            <br />
+            <br />
+            <asp:Button ID="TestList" runat="server" CssClass="btn-primary" OnClick="TestList_Click" Text="Test ServiceNet External To Rackspace" />
         </div>
         <div class="span4">
             Container To Upload To:
