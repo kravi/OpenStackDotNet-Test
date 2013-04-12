@@ -50,18 +50,12 @@
                 </div>
             </div>
             <div>
-                Use service net?:
+                Use service net?:  
+                <asp:CheckBox ID="SnetCheck" Text="true" runat="server" />
                 <br />
-                <div style="width: 40px; float: left;">
-                    <asp:CheckBox ID="SnetCheck" Text="true" value="DFW" runat="server" />
-                </div>
-                <div style="clear: both;">
-                </div>
+                <br />
             </div>
             <asp:Button ID="btnListContainers" runat="server" CssClass="btn-primary" OnClick="ListContainerInfo_Click" Text="List Container Info" />
-            <br />
-            <br />
-            <asp:Button ID="TestList" runat="server" CssClass="btn-primary" OnClick="TestList_Click" Text="Test ServiceNet External To Rackspace" />
         </div>
         <div class="span4">
             Container To Upload To:

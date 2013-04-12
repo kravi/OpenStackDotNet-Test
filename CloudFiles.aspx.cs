@@ -17,52 +17,97 @@ namespace OpenStackDotNet_Test
         {
 
         }
+        protected void CFProviderListContainers(string dcregion, bool dcsnet = true)
+        {
+            var identity = new RackspaceCloudIdentity() { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
+
+            CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider(identity);
+            CloudFilesProvider CloudFilesProvider = new net.openstack.Providers.Rackspace.CloudFilesProvider(identity);
+
+            var CfContainers = CloudFilesProvider.ListContainers(null, null, null, dcregion, dcsnet);
+
+            CFContainerDDL.DataSource = CfContainers;
+            CFContainerDDL.DataTextField = "Name";
+            CFContainerDDL.DataBind();
+        }
+        protected void CFProviderListContainerObjects(string cfcontainername, string dcregion, bool dcsnet = true)
+        {
+            var identity = new RackspaceCloudIdentity() { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
+
+            CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider(identity);
+            CloudFilesProvider CloudFilesProvider = new net.openstack.Providers.Rackspace.CloudFilesProvider(identity);
+
+            var Cfobjects = CloudFilesProvider.ListObjects(cfcontainername, null, null, null, dcregion, dcsnet);
+
+            CFContainerContentsDDL.DataSource = Cfobjects;
+            CFContainerContentsDDL.DataTextField = "Name";
+            CFContainerContentsDDL.DataBind();
+        }
+        protected void CFProvidersCreateContainer(string cfcreatecontainername, string dcregion, bool dcsnet = true)
+        {
+            var identity = new RackspaceCloudIdentity() { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
+
+            CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider(identity);
+            CloudFilesProvider CloudFilesProvider = new net.openstack.Providers.Rackspace.CloudFilesProvider(identity);
+
+            var CfCreateContainer = CloudFilesProvider.CreateContainer(cfcreatecontainername, dcregion, dcsnet);
+        }
+        protected void CFProvidersDeleteContainer(string cfdeletecontainername, string dcregion, bool dcsnet = true)
+        {
+            var identity = new RackspaceCloudIdentity() { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
+
+            CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider(identity);
+            CloudFilesProvider CloudFilesProvider = new net.openstack.Providers.Rackspace.CloudFilesProvider(identity);
+
+            var Cfdeletecontainer = CloudFilesProvider.DeleteContainer(cfdeletecontainername, dcregion, dcsnet);
+        }
+        protected void CFProvidersDeleteContainerObject(string cfcontainername, string cfdeletecontainerobject, string dcregion, bool dcsnet = true)
+        {
+            var identity = new RackspaceCloudIdentity() { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
+
+            CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider(identity);
+            CloudFilesProvider CloudFilesProvider = new net.openstack.Providers.Rackspace.CloudFilesProvider(identity);
+
+            var Cfdeletecontainerobject = CloudFilesProvider.DeleteObject(cfcontainername, cfdeletecontainerobject, null, dcregion, dcsnet);
+        }
+        protected void CFProvidersCreateObjectFromFile(string cfcontainername, string cfcreateobjfilepath, string cfcreateobjfilename, int cfcreateobjchunksize, string dcregion, bool dcsnet = true)
+        {
+            var identity = new RackspaceCloudIdentity() { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
+
+            CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider(identity);
+            CloudFilesProvider CloudFilesProvider = new net.openstack.Providers.Rackspace.CloudFilesProvider(identity);
+
+            CloudFilesProvider.CreateObjectFromFile(cfcontainername, cfcreateobjfilepath, cfcreateobjfilename, cfcreateobjchunksize, null, dcregion, null, dcsnet);
+        }
         protected void ListContainerInfo_Click(object sender, EventArgs e)
         {
             try
             {
                 string containername = CFContainerDDL.Text;
+                string fileName = HttpUtility.UrlPathEncode(FileUpload1.FileName);
+                string path = Server.MapPath(HttpUtility.UrlPathEncode("~/temp"));
+                string filePath = Path.Combine(path, fileName);
+
                 bool snetTrue = bool.Parse(SnetCheck.Text);
                 bool snetFalse = bool.Parse("false");
-
-                CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider();
-                CloudFilesProvider CloudFilesProvider = new net.openstack.Providers.Rackspace.CloudFilesProvider();
-
-                var identity = new RackspaceCloudIdentity { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
 
                 if (RegionDFW.Checked)
                 {
                     if (CFContainerDDL.SelectedItem == null & SnetCheck.Checked)
                     {
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("dfw", snetTrue);
                     }
                     else if (CFContainerDDL.SelectedItem == null)
                     {
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetFalse, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("dfw", snetFalse);
                     }
                     else if (CFContainerDDL.SelectedItem != null & SnetCheck.Checked)
                     {
                         CFContainerContentsDDL.Items.Clear();
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetTrue, identity);
+                        CFProviderListContainers("dfw", snetTrue);
 
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
-
-                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetTrue, identity);
-
-                        CFContainerContentsDDL.DataSource = Cfobjects;
-                        CFContainerContentsDDL.DataTextField = "Name";
-                        CFContainerContentsDDL.DataBind();
+                        CFProviderListContainerObjects(containername, "dfw", snetTrue);
                     }
                     else
                     {
@@ -70,40 +115,20 @@ namespace OpenStackDotNet_Test
                         {
                             if (CFContainerContentsDDL.SelectedItem == null)
                             {
-                                var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetFalse, identity);
+                                CFProviderListContainers("dfw", snetFalse);
 
-                                CFContainerDDL.DataSource = CfContainers;
-                                CFContainerDDL.DataTextField = "Name";
-                                CFContainerDDL.DataBind();
-
-                                var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetFalse, identity);
-
-                                CFContainerContentsDDL.DataSource = Cfobjects;
-                                CFContainerContentsDDL.DataTextField = "Name";
-                                CFContainerContentsDDL.DataBind();
+                                CFProviderListContainerObjects(containername, "dfw", snetFalse);
                             }
                             else
                             {
-                                var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetFalse, identity);
-
-                                CFContainerDDL.DataSource = CfContainers;
-                                CFContainerDDL.DataTextField = "Name";
-                                CFContainerDDL.DataBind();
+                                CFProviderListContainers("dfw", snetFalse);
                             }
                         }
                         else
                         {
-                            var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetFalse, identity);
+                            CFProviderListContainers("dfw", snetFalse);
 
-                            CFContainerDDL.DataSource = CfContainers;
-                            CFContainerDDL.DataTextField = "Name";
-                            CFContainerDDL.DataBind();
-
-                            var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetFalse, identity);
-
-                            CFContainerContentsDDL.DataSource = Cfobjects;
-                            CFContainerContentsDDL.DataTextField = "Name";
-                            CFContainerContentsDDL.DataBind();
+                            CFProviderListContainerObjects(containername, "dfw", snetFalse);
                         }
                     }
                 }
@@ -111,33 +136,17 @@ namespace OpenStackDotNet_Test
                 {
                     if (CFContainerDDL.SelectedItem == null & SnetCheck.Checked)
                     {
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("ord", snetTrue);
                     }
                     else if (CFContainerDDL.SelectedItem == null)
                     {
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("ord", snetFalse);
                     }
                     else if (CFContainerDDL.SelectedItem != null & SnetCheck.Checked)
                     {
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetTrue, identity);
+                        CFProviderListContainers("ord", snetTrue);
 
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
-
-                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetTrue, identity);
-
-                        CFContainerContentsDDL.DataSource = Cfobjects;
-                        CFContainerContentsDDL.DataTextField = "Name";
-                        CFContainerContentsDDL.DataBind();
+                        CFProviderListContainerObjects(containername, "ord", snetTrue);
                     }
                     else
                     {
@@ -145,146 +154,29 @@ namespace OpenStackDotNet_Test
                         {
                             if (CFContainerContentsDDL.SelectedItem == null)
                             {
-                                var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
+                                CFProviderListContainers("ord", snetFalse);
 
-                                CFContainerDDL.DataSource = CfContainers;
-                                CFContainerDDL.DataTextField = "Name";
-                                CFContainerDDL.DataBind();
-
-                                var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetFalse, identity);
-
-                                CFContainerContentsDDL.DataSource = Cfobjects;
-                                CFContainerContentsDDL.DataTextField = "Name";
-                                CFContainerContentsDDL.DataBind();
+                                CFProviderListContainerObjects(containername, "ord", snetFalse);
                             }
                             else if (CFContainerContentsDDL.SelectedItem != null)
                             {
-                                CFContainerContentsDDL.Items.Clear(); 
+                                CFContainerContentsDDL.Items.Clear();
 
-                                var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
+                                CFProviderListContainers("ord", snetFalse);
 
-                                CFContainerDDL.DataSource = CfContainers;
-                                CFContainerDDL.DataTextField = "Name";
-                                CFContainerDDL.DataBind();
-
-                                var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetFalse, identity);
-
-                                CFContainerContentsDDL.DataSource = Cfobjects;
-                                CFContainerContentsDDL.DataTextField = "Name";
-                                CFContainerContentsDDL.DataBind();
+                                CFProviderListContainerObjects(containername, "ord", snetFalse);
                             }
                             else
                             {
-                                var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
-
-                                CFContainerDDL.DataSource = CfContainers;
-                                CFContainerDDL.DataTextField = "Name";
-                                CFContainerDDL.DataBind();
+                                CFProviderListContainers("ord", snetFalse);
                             }
                         }
                         else
                         {
-                            var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
+                            CFProviderListContainers("ord", snetFalse);
 
-                            CFContainerDDL.DataSource = CfContainers;
-                            CFContainerDDL.DataTextField = "Name";
-                            CFContainerDDL.DataBind();
-
-                            var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetFalse, identity);
-
-                            CFContainerContentsDDL.DataSource = Cfobjects;
-                            CFContainerContentsDDL.DataTextField = "Name";
-                            CFContainerContentsDDL.DataBind();
+                            CFProviderListContainerObjects(containername, "ord", snetFalse);
                         }
-                    }
-                }
-                else
-                {
-                    LblInfo.Text = "Please select DFW or ORD not both.";
-                }
-            }
-            catch (Exception ex)
-            {
-                Error.Text = "Something went terribly wrong! See below for more info. <br /> <br />" + ex.ToString();
-            }
-        }
-        protected void TestList_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string containername = CFContainerDDL.Text;
-                bool snetTrue = bool.Parse(SnetCheck.Text);
-                bool snetFalse = bool.Parse("false");
-
-                CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider();
-                CloudFilesProvider CloudFilesProvider = new net.openstack.Providers.Rackspace.CloudFilesProvider();
-
-                var identity = new RackspaceCloudIdentity { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
-
-                if (RegionDFW.Checked)
-                {
-                    if (CFContainerDDL.SelectedItem == null & SnetCheck.Checked)
-                    {
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
-                    }
-                    else if (CFContainerDDL.SelectedItem == null)
-                    {
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
-                    }
-                    else
-                    {
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
-
-                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetTrue, identity);
-
-                        CFContainerContentsDDL.DataSource = Cfobjects;
-                        CFContainerContentsDDL.DataTextField = "Name";
-                        CFContainerContentsDDL.DataBind();
-                    }
-                }
-                else if (RegionORD.Checked)
-                {
-                    if (CFContainerDDL.SelectedItem == null & SnetCheck.Checked)
-                    {
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
-                    }
-                    else if (CFContainerDDL.SelectedItem == null)
-                    {
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
-                    }
-                    else
-                    {
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
-
-                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetTrue, identity);
-
-                        CFContainerContentsDDL.DataSource = Cfobjects;
-                        CFContainerContentsDDL.DataTextField = "Name";
-                        CFContainerContentsDDL.DataBind();
                     }
                 }
                 else
@@ -305,95 +197,58 @@ namespace OpenStackDotNet_Test
                 bool snetTrue = bool.Parse(SnetCheck.Text);
                 bool snetFalse = bool.Parse("false");
 
-                CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider();
-                CloudFilesProvider CloudFilesProvider = new net.openstack.Providers.Rackspace.CloudFilesProvider();
-
-                var identity = new RackspaceCloudIdentity { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
-
                 if (RegionDFW.Checked)
                 {
                     if (CFContainerDDL.SelectedItem == null & SnetCheck.Checked)
                     {
-                        var CfCreateContainer = CloudFilesProvider.CreateContainer(CFCreateContainerTxt.Text, "dfw", snetTrue, identity);
+                        CFProvidersCreateContainer(CFCreateContainerTxt.Text, "dfw", snetTrue);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("dfw", snetTrue);
                     }
                     else if (CFContainerDDL.SelectedItem == null)
                     {
-                        var CfCreateContainer = CloudFilesProvider.CreateContainer(CFCreateContainerTxt.Text, "dfw", snetFalse, identity);
+                        CFProvidersCreateContainer(CFCreateContainerTxt.Text, "dfw", snetFalse);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetFalse, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("dfw", snetFalse);
                     }
                     else if (CFContainerDDL.SelectedItem != null & SnetCheck.Checked)
                     {
-                        var CfCreateContainer = CloudFilesProvider.CreateContainer(CFCreateContainerTxt.Text, "dfw", snetTrue, identity);
+                        CFProvidersCreateContainer(CFCreateContainerTxt.Text, "dfw", snetTrue);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("dfw", snetTrue);
                     }
                     else
                     {
-                        var CfCreateContainer = CloudFilesProvider.CreateContainer(CFCreateContainerTxt.Text, "dfw", snetFalse, identity);
+                        CFProvidersCreateContainer(CFCreateContainerTxt.Text, "dfw", snetFalse);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetFalse, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("dfw", snetFalse);
                     }
                 }
                 else if (RegionORD.Checked)
                 {
                     if (CFContainerDDL.SelectedItem == null & SnetCheck.Checked)
                     {
-                        var CfCreateContainer = CloudFilesProvider.CreateContainer(CFCreateContainerTxt.Text, "ord", snetTrue, identity);
+                        CFProvidersCreateContainer(CFCreateContainerTxt.Text, "ord", snetTrue);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("ord", snetTrue);
                     }
                     else if (CFContainerDDL.SelectedItem == null)
                     {
-                        var CfCreateContainer = CloudFilesProvider.CreateContainer(CFCreateContainerTxt.Text, "ord", snetFalse, identity);
+                        CFProvidersCreateContainer(CFCreateContainerTxt.Text, "ord", snetFalse);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("ord", snetFalse);
                     }
                     else if (CFContainerDDL.SelectedItem != null & SnetCheck.Checked)
                     {
-                        var CfCreateContainer = CloudFilesProvider.CreateContainer(CFCreateContainerTxt.Text, "ord", snetTrue, identity);
+                        CFProvidersCreateContainer(CFCreateContainerTxt.Text, "ord", snetTrue);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("ord", snetTrue);
                     }
                     else
                     {
-                        var CfCreateContainer = CloudFilesProvider.CreateContainer(CFCreateContainerTxt.Text, "ord", snetFalse, identity);
+                        CFProvidersCreateContainer(CFCreateContainerTxt.Text, "ord", snetFalse);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("ord", snetFalse);
                     }
                 }
                 else
@@ -414,95 +269,58 @@ namespace OpenStackDotNet_Test
                 bool snetTrue = bool.Parse(SnetCheck.Text);
                 bool snetFalse = bool.Parse("false");
 
-                CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider();
-                CloudFilesProvider CloudFilesProvider = new net.openstack.Providers.Rackspace.CloudFilesProvider();
-
-                var identity = new RackspaceCloudIdentity { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
-
                 if (RegionDFW.Checked)
                 {
                     if (CFContainerDDL.SelectedItem == null & SnetCheck.Checked)
                     {
-                        var Cfdeletecontainer = CloudFilesProvider.DeleteContainer(containername, "dfw", snetTrue, identity);
+                        CFProvidersDeleteContainer(containername, "dfw", snetTrue);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("dfw", snetTrue);
                     }
                     else if (CFContainerDDL.SelectedItem == null)
                     {
-                        var Cfdeletecontainer = CloudFilesProvider.DeleteContainer(containername, "dfw", snetFalse, identity);
+                        CFProvidersDeleteContainer(containername, "dfw", snetFalse);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetFalse, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("dfw", snetFalse);
                     }
                     else if (CFContainerDDL.SelectedItem != null & SnetCheck.Checked)
                     {
-                        var Cfdeletecontainer = CloudFilesProvider.DeleteContainer(containername, "dfw", snetTrue, identity);
+                        CFProvidersDeleteContainer(containername, "dfw", snetTrue);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("dfw", snetTrue);
                     }
                     else
                     {
-                        var Cfdeletecontainer = CloudFilesProvider.DeleteContainer(containername, "dfw", snetFalse, identity);
+                        CFProvidersDeleteContainer(containername, "dfw", snetFalse);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "dfw", snetFalse, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("dfw", snetFalse);
                     }
                 }
                 else if (RegionORD.Checked)
                 {
                     if (CFContainerDDL.SelectedItem == null & SnetCheck.Checked)
                     {
-                        var Cfdeletecontainer = CloudFilesProvider.DeleteContainer(containername, "ord", snetTrue, identity);
+                        CFProvidersDeleteContainer(containername, "ord", snetTrue);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("ord", snetTrue);
                     }
                     else if (CFContainerDDL.SelectedItem == null)
                     {
-                        var Cfdeletecontainer = CloudFilesProvider.DeleteContainer(containername, "ord", snetFalse, identity);
+                        CFProvidersDeleteContainer(containername, "ord", snetFalse);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("ord", snetFalse);
                     }
                     else if (CFContainerDDL.SelectedItem != null & SnetCheck.Checked)
                     {
-                        var Cfdeletecontainer = CloudFilesProvider.DeleteContainer(containername, "ord", snetTrue, identity);
+                        CFProvidersDeleteContainer(containername, "ord", snetTrue);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetTrue, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("ord", snetTrue);
                     }
                     else
                     {
-                        var Cfdeletecontainer = CloudFilesProvider.DeleteContainer(containername, "ord", snetFalse, identity);
+                        CFProvidersDeleteContainer(containername, "ord", snetFalse);
 
-                        var CfContainers = CloudFilesProvider.ListContainers(null, null, null, "ord", snetFalse, identity);
-
-                        CFContainerDDL.DataSource = CfContainers;
-                        CFContainerDDL.DataTextField = "Name";
-                        CFContainerDDL.DataBind();
+                        CFProviderListContainers("ord", snetFalse);
                     }
                 }
                 else
@@ -523,87 +341,57 @@ namespace OpenStackDotNet_Test
                 bool snetTrue = bool.Parse(SnetCheck.Text);
                 bool snetFalse = bool.Parse("false");
 
-                CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider();
-                CloudFilesProvider CloudFilesProvider = new net.openstack.Providers.Rackspace.CloudFilesProvider();
-
-                var identity = new RackspaceCloudIdentity { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
-
                 if (RegionDFW.Checked)
                 {
                     if (CFContainerDDL.SelectedItem == null & SnetCheck.Checked)
                     {
-                        var Cfdeletecontainerobject = CloudFilesProvider.DeleteObject(containername, CFContainerContentsDDL.SelectedValue, null, "dfw", snetTrue, identity);
-                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetTrue, identity);
-
-                        CFContainerContentsDDL.DataSource = Cfobjects;
-                        CFContainerContentsDDL.DataTextField = "Name";
-                        CFContainerContentsDDL.DataBind();
+                        CFProvidersDeleteContainerObject(containername, CFContainerContentsDDL.SelectedValue, "dfw", snetTrue);
+                        CFProviderListContainerObjects(containername, "dfw", snetTrue);
                     }
                     else if (CFContainerDDL.SelectedItem == null)
                     {
-                        var Cfdeletecontainerobject = CloudFilesProvider.DeleteObject(containername, CFContainerContentsDDL.SelectedValue, null, "dfw", snetFalse, identity);
-                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetFalse, identity);
+                        CFProvidersDeleteContainerObject(containername, CFContainerContentsDDL.SelectedValue, "dfw", snetFalse);
 
-                        CFContainerContentsDDL.DataSource = Cfobjects;
-                        CFContainerContentsDDL.DataTextField = "Name";
-                        CFContainerContentsDDL.DataBind();
+                        CFProviderListContainerObjects(containername, "dfw", snetFalse);
                     }
                     else if (CFContainerDDL.SelectedItem != null & SnetCheck.Checked)
                     {
-                        var Cfdeletecontainerobject = CloudFilesProvider.DeleteObject(containername, CFContainerContentsDDL.SelectedValue, null, "dfw", snetTrue, identity);
-                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetTrue, identity);
+                        CFProvidersDeleteContainerObject(containername, CFContainerContentsDDL.SelectedValue, "dfw", snetTrue);
 
-                        CFContainerContentsDDL.DataSource = Cfobjects;
-                        CFContainerContentsDDL.DataTextField = "Name";
-                        CFContainerContentsDDL.DataBind();
+                        CFProviderListContainerObjects(containername, "dfw", snetTrue);
                     }
                     else
                     {
-                        var Cfdeletecontainerobject = CloudFilesProvider.DeleteObject(containername, CFContainerContentsDDL.SelectedValue, null, "dfw", snetFalse, identity);
-                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetFalse, identity);
+                        CFProvidersDeleteContainerObject(containername, CFContainerContentsDDL.SelectedValue, "dfw", snetFalse);
 
-                        CFContainerContentsDDL.DataSource = Cfobjects;
-                        CFContainerContentsDDL.DataTextField = "Name";
-                        CFContainerContentsDDL.DataBind();
+                        CFProviderListContainerObjects(containername, "dfw", snetFalse);
                     }
                 }
                 else if (RegionORD.Checked)
                 {
                     if (CFContainerDDL.SelectedItem == null & SnetCheck.Checked)
                     {
-                        var Cfdeletecontainerobject = CloudFilesProvider.DeleteObject(containername, CFContainerContentsDDL.SelectedValue, null, "ord", snetTrue, identity);
-                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetTrue, identity);
+                        CFProvidersDeleteContainerObject(containername, CFContainerContentsDDL.SelectedValue, "ord", snetTrue);
 
-                        CFContainerContentsDDL.DataSource = Cfobjects;
-                        CFContainerContentsDDL.DataTextField = "Name";
-                        CFContainerContentsDDL.DataBind();
+                        CFProviderListContainerObjects(containername, "ord", snetTrue);
                     }
                     else if (CFContainerDDL.SelectedItem == null)
                     {
-                        var Cfdeletecontainerobject = CloudFilesProvider.DeleteObject(containername, CFContainerContentsDDL.SelectedValue, null, "ord", snetFalse, identity);
-                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetFalse, identity);
+                        CFProvidersDeleteContainerObject(containername, CFContainerContentsDDL.SelectedValue, "ord", snetFalse);
 
-                        CFContainerContentsDDL.DataSource = Cfobjects;
-                        CFContainerContentsDDL.DataTextField = "Name";
-                        CFContainerContentsDDL.DataBind();
+                        CFProviderListContainerObjects(containername, "ord", snetFalse);
                     }
                     else if (CFContainerDDL.SelectedItem != null & SnetCheck.Checked)
                     {
-                        var Cfdeletecontainerobject = CloudFilesProvider.DeleteObject(containername, CFContainerContentsDDL.SelectedValue, null, "ord", snetTrue, identity);
-                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetTrue, identity);
+                        CFProvidersDeleteContainerObject(containername, CFContainerContentsDDL.SelectedValue, "ord", snetTrue);
 
-                        CFContainerContentsDDL.DataSource = Cfobjects;
-                        CFContainerContentsDDL.DataTextField = "Name";
-                        CFContainerContentsDDL.DataBind();
+                        CFProviderListContainerObjects(containername, "ord", snetTrue);
                     }
                     else
                     {
-                        var Cfdeletecontainerobject = CloudFilesProvider.DeleteObject(containername, CFContainerContentsDDL.SelectedValue, null, "ord", snetFalse, identity);
-                        var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetFalse, identity);
+                        CFProvidersDeleteContainerObject(containername, CFContainerContentsDDL.SelectedValue, "ord", snetFalse);
 
-                        CFContainerContentsDDL.DataSource = Cfobjects;
-                        CFContainerContentsDDL.DataTextField = "Name";
-                        CFContainerContentsDDL.DataBind();
+                        CFProviderListContainerObjects(containername, "dfw", snetFalse);
                     }
                 }
                 else
@@ -620,22 +408,16 @@ namespace OpenStackDotNet_Test
         {
             try
             {
-                string containername = CFContainerDDL.Text;
+                string containername = HttpUtility.UrlPathEncode(CFContainerDDL.Text);
+                string fileName = HttpUtility.UrlPathEncode(FileUpload1.FileName);
+                string path = Server.MapPath(HttpUtility.UrlPathEncode("~/temp"));
+                string filePath = Path.Combine(path, fileName);
+
                 bool snetTrue = bool.Parse(SnetCheck.Text);
                 bool snetFalse = bool.Parse("false");
 
-                CloudIdentityProvider identityProvider = new net.openstack.Providers.Rackspace.CloudIdentityProvider();
-                CloudFilesProvider CloudFilesProvider = new net.openstack.Providers.Rackspace.CloudFilesProvider();
-
-                var identity = new RackspaceCloudIdentity { Username = CFUsernameText.Text, APIKey = CFApiKeyText.Text };
-
                 if (FileUpload1.HasFile)
                 {
-                    //create the path to save the file to
-                    string fileName = FileUpload1.FileName;
-                    string path = Server.MapPath("~/temp");
-                    string filePath = Path.Combine(path, fileName);
-
                     //save the file to our local path
                     FileUpload1.SaveAs(Path.Combine(path, fileName));
 
@@ -643,110 +425,71 @@ namespace OpenStackDotNet_Test
                     {
                         if (CFContainerDDL.SelectedItem == null & SnetCheck.Checked)
                         {
-                            CloudFilesProvider.CreateObjectFromFile(containername, filePath, fileName, 4096, null, "dfw", null, snetTrue, identity);
-                            var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetTrue, identity);
+                            CFProvidersCreateObjectFromFile(containername, filePath, fileName, 4096, "dfw", snetTrue);
+
+                            CFProviderListContainerObjects(containername, "dfw", snetTrue);
+
                             File.Delete(filePath);
-
-                            CFResultsGrid.DataSource = Cfobjects;
-                            CFResultsGrid.DataBind();
-
-                            CFContainerContentsDDL.DataSource = Cfobjects;
-                            CFContainerContentsDDL.DataTextField = "Name";
-                            CFContainerContentsDDL.DataBind();
                         }
                         else if (CFContainerDDL.SelectedItem == null)
                         {
-                            CloudFilesProvider.CreateObjectFromFile(containername, filePath, fileName, 4096, null, "dfw", null, snetFalse, identity);
-                            var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetFalse, identity);
+                            CFProvidersCreateObjectFromFile(containername, filePath, fileName, 4096, "dfw", snetFalse);
+
                             File.Delete(filePath);
 
-                            CFResultsGrid.DataSource = Cfobjects;
-                            CFResultsGrid.DataBind();
-
-                            CFContainerContentsDDL.DataSource = Cfobjects;
-                            CFContainerContentsDDL.DataTextField = "Name";
-                            CFContainerContentsDDL.DataBind();
+                            CFProviderListContainerObjects(containername, "dfw", snetFalse);
                         }
                         else if (CFContainerDDL.SelectedItem != null & SnetCheck.Checked)
                         {
-                            CloudFilesProvider.CreateObjectFromFile(containername, filePath, fileName, 4096, null, "dfw", null, snetTrue, identity);
-                            var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetTrue, identity);
+                            CFProvidersCreateObjectFromFile(containername, filePath, fileName, 4096, "dfw", snetTrue);
+
                             File.Delete(filePath);
 
-                            CFResultsGrid.DataSource = Cfobjects;
-                            CFResultsGrid.DataBind();
-
-                            CFContainerContentsDDL.DataSource = Cfobjects;
-                            CFContainerContentsDDL.DataTextField = "Name";
-                            CFContainerContentsDDL.DataBind();
+                            CFProviderListContainerObjects(containername, "dfw", snetTrue);
                         }
                         else
                         {
-                            CloudFilesProvider.CreateObjectFromFile(containername, filePath, fileName, 4096, null, "dfw", null, snetFalse, identity);
-                            var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "dfw", snetFalse, identity);
+                            CFProvidersCreateObjectFromFile(containername, filePath, fileName, 4096, "dfw", snetFalse);
+
                             File.Delete(filePath);
 
-                            CFResultsGrid.DataSource = Cfobjects;
-                            CFResultsGrid.DataBind();
+                            CFProviderListContainerObjects(containername, "dfw", snetFalse);
 
-                            CFContainerContentsDDL.DataSource = Cfobjects;
-                            CFContainerContentsDDL.DataTextField = "Name";
-                            CFContainerContentsDDL.DataBind();
                         }
                     }
                     else if (RegionORD.Checked)
                     {
                         if (CFContainerDDL.SelectedItem == null & SnetCheck.Checked)
                         {
-                            CloudFilesProvider.CreateObjectFromFile(containername, filePath, fileName, 4096, null, "ord", null, snetTrue, identity);
-                            var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetTrue, identity);
+                            CFProvidersCreateObjectFromFile(containername, filePath, fileName, 4096, "dfw", snetTrue);
+
                             File.Delete(filePath);
 
-                            CFResultsGrid.DataSource = Cfobjects;
-                            CFResultsGrid.DataBind();
-
-                            CFContainerContentsDDL.DataSource = Cfobjects;
-                            CFContainerContentsDDL.DataTextField = "Name";
-                            CFContainerContentsDDL.DataBind();
+                            CFProviderListContainerObjects(containername, "ord", snetTrue);
                         }
                         else if (CFContainerDDL.SelectedItem == null)
                         {
-                            CloudFilesProvider.CreateObjectFromFile(containername, filePath, fileName, 4096, null, "ord", null, snetFalse, identity);
-                            var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetFalse, identity);
+                            CFProvidersCreateObjectFromFile(containername, filePath, fileName, 4096, "dfw", snetFalse);
+
                             File.Delete(filePath);
 
-                            CFResultsGrid.DataSource = Cfobjects;
-                            CFResultsGrid.DataBind();
-
-                            CFContainerContentsDDL.DataSource = Cfobjects;
-                            CFContainerContentsDDL.DataTextField = "Name";
-                            CFContainerContentsDDL.DataBind();
+                            CFProviderListContainerObjects(containername, "ord", snetFalse);
                         }
                         else if (CFContainerDDL.SelectedItem != null & SnetCheck.Checked)
                         {
-                            CloudFilesProvider.CreateObjectFromFile(containername, filePath, fileName, 4096, null, "ord", null, snetTrue, identity);
-                            var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetTrue, identity);
+                            CFProvidersCreateObjectFromFile(containername, filePath, fileName, 4096, "dfw", snetTrue);
+
                             File.Delete(filePath);
 
-                            CFResultsGrid.DataSource = Cfobjects;
-                            CFResultsGrid.DataBind();
-
-                            CFContainerContentsDDL.DataSource = Cfobjects;
-                            CFContainerContentsDDL.DataTextField = "Name";
-                            CFContainerContentsDDL.DataBind();
+                            CFProviderListContainerObjects(containername, "ord", snetTrue);
                         }
                         else
                         {
-                            CloudFilesProvider.CreateObjectFromFile(containername, filePath, fileName, 4096, null, "ord", null, snetFalse, identity);
-                            var Cfobjects = CloudFilesProvider.ListObjects(containername, null, null, null, "ord", snetFalse, identity);
+                            CFProvidersCreateObjectFromFile(containername, filePath, fileName, 4096, "dfw", snetFalse);
+
                             File.Delete(filePath);
 
-                            CFResultsGrid.DataSource = Cfobjects;
-                            CFResultsGrid.DataBind();
-
-                            CFContainerContentsDDL.DataSource = Cfobjects;
-                            CFContainerContentsDDL.DataTextField = "Name";
-                            CFContainerContentsDDL.DataBind();
+                            CFProviderListContainerObjects(containername, "ord", snetFalse);
                         }
                     }
                     else
